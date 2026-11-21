@@ -17,6 +17,13 @@ public class Archer extends Hero {
 
         // TODO 3: вміння «Подвійний постріл» (Target.ENEMY, перезарядка 1) ЛЯМБДОЮ:
         //   два постріли по random(7, 11); у журнал — сума шкоди.
+        addSkill(new Skill("Подвійний постріл", Target.ENEMY, 1, (user, target) -> {
+            int dmg = target.takeDamage(random(7, 11));
+            dmg += target.takeDamage(random(7, 11));
+            return user.getName() + " робить подвійний постріл по " + target.getName()
+                    + ": " + dmg + " шкоди";
+        }));
+
 
         // TODO 9: ультимейт «Злива стріл» — АНОНІМНИЙ КЛАС з полем-лічильником:
         //   кожен живий ворог отримує N стріл по random(4, 8) шкоди,
