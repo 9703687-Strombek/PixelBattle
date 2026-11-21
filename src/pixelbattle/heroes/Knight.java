@@ -1,8 +1,6 @@
 package pixelbattle.heroes;
 
-import pixelbattle.core.Hero;
-import pixelbattle.core.Skill;
-import pixelbattle.core.Target;
+import pixelbattle.core.*;
 import pixelbattle.engine.Sprite;
 
 /** Лицар — міцний воїн ближнього бою. */
@@ -26,6 +24,24 @@ public class Knight extends Hero {
         // TODO 7: ультимейт «Небесний молот» — АНОНІМНИЙ КЛАС, що реалізує Ultimate:
         //   кожному ЖИВОМУ ворогу 15 шкоди та оглушення на 1 хід.
         //   (не забудьте import pixelbattle.core.Ultimate; та import pixelbattle.core.Fighter;)
+        setUltimate(new Ultimate() {
+            @Override public String getName() { return "Небесний молот"; }
+
+            @Override public String getDescription() {
+                return "15 шкоди та оглушення на 1 хід усім ворогам";
+            }
+
+            @Override public String activate(Fighter user, Fighter[] allies, Fighter[] enemies) {
+                int total = 0;
+                for (Fighter e : enemies) {
+                    if (e.isAlive()) {               // мертвих не чіпаємо
+                        total += e.takeDamage(15);
+                        e.stun(1);
+                    }
+                }
+                return user.getName() + " створює Небесний молот! Усі вороги оглушені, шкоди разом: " + total;
+            }
+        });
     }
 
     // TODO 4: пасивка «Важка броня» — перевизначте modifyIncomingDamage:
